@@ -21,6 +21,7 @@
 
 #include "visa.h"
 #include <string>
+#include <sstream>
 #include <boost/regex.hpp>
 using namespace std;
 
@@ -80,6 +81,18 @@ ViStatus _VI_FUNC viParseRsrc(ViSession /*rmSesn*/, ViRsrc rsrcName, ViPUInt16 p
     std::stringstream ssBoard(match[1]);
     std::stringstream ssHostAddress(match[2]);
     std::stringstream ssHostPort(match[3]);
+    ssBoard >> *pIntfNum;
+    return VI_SUCCESS;
+  }
+
+  // ASRL[board]:hostaddress:seriialport::INSTR - enet serial
+  // ASRL[board]::INSTR
+  boost::regex regexASRL("ASRL(\\d*)(|::INSTR)");
+  if(regex_match(rsrcName, match, regexASRL))
+  {
+    *pIntfType = VI_INTF_ASRL;
+    *pIntfNum = 0;
+    std::stringstream ssBoard(match[1]);
     ssBoard >> *pIntfNum;
     return VI_SUCCESS;
   }

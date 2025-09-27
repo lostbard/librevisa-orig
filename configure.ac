@@ -66,6 +66,7 @@ AC_CHECK_HEADER([vxi.h])
 # Checks for library functions.
 
 AM_CONDITIONAL([WITH_USB], [test "x$WITH_USB" = "xyes"])
+AM_CONDITIONAL([WITH_SERIAL], [test "xyes" = "xyes"])
 AM_CONDITIONAL([WITH_VXI], [test $ac_cv_lib_vxiclient_create_link_1 = yes -a $ac_cv_header_vxi_h = yes])
 AM_CONDITIONAL([WITH_AVAHI], [test "x$WITH_AVAHI" = "xyes"])
 

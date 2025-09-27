@@ -63,6 +63,7 @@ libvisa_la_SOURCES = \
 	viWaitOnEvent.cpp \
 	viWrite.cpp \
 	$(USB_SOURCES) \
+	$(SERIAL_SOURCES) \
 	$(VXI_SOURCES)
 libvisa_la_LDFLAGS = -export-symbols $(srcdir)/libvisa.sym
 
@@ -92,6 +93,15 @@ AVAHI_SOURCES = \
 	vxi/avahi.cpp vxi/avahi.h
 else
 AVAHI_SOURCES =
+endif
+
+if WITH_SERIAL
+SERIAL_SOURCES = \
+	serial/serial_resource_creator.cpp serial/serial_resource_creator.h \
+	serial/serial_resource.cpp serial/serial_resource.h \
+	serial/serial_device.cpp serial/serial_device.h
+else
+SERIAL_SOURCES =
 endif
 
 INCLUDES = -I$(top_srcdir)/include
