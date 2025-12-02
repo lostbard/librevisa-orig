@@ -58,6 +58,17 @@ ViStatus serial_resource::GetAttribute(ViAttr attr, void *attrState)
                                    *reinterpret_cast<ViUInt16*>(attrState) = VI_INTF_ASRL;
 				   break;
 			}
+		case VI_ATTR_TMO_VALUE:
+			{
+				double timeout = device->get_timeout();
+				if (timeout < 0)
+                                   *reinterpret_cast<ViUInt32*>(attrState) = VI_TMO_INFINITE;
+				else
+                                   *reinterpret_cast<ViUInt32*>(attrState) = (timeout*1000UL);
+				break;
+			}
+
+
 		case VI_ATTR_ASRL_BAUD:
 			{
 				int baud = device->get_baudrate();
@@ -67,6 +78,7 @@ ViStatus serial_resource::GetAttribute(ViAttr attr, void *attrState)
 				}
 				break;
 			}
+
 		case VI_ATTR_ASRL_STOP_BITS:
 			{
 				int stopbits = device->get_stopbits();
@@ -124,6 +136,60 @@ ViStatus serial_resource::SetAttribute(ViAttr attr, ViAttrState attrState)
 {
         switch(attr) {
                 // any we handle
+		case VI_ATTR_TMO_VALUE:
+			{
+			   	ViUInt32 timeout = attrState;
+			   	int ok = -1;
+			   	if(timeout == VI_TMO_INFINITE)
+					ok = device->set_timeout(-1);
+			   	else if(timeout == VI_TMO_IMMEDIATE)
+					ok = device->set_timeout(0);
+			   	else
+					ok = device->set_timeout((double)timeout*1000.0);
+
+				if(ok < 0)
+				        return VI_ERROR_IO;
+				break;
+			}
+
+		case VI_ATTR_ASRL_BAUD:
+			{
+			   	ViUInt32 baud = attrState;
+				int ok = device->set_baudrate(baud);
+				if(ok < 0)
+        				return VI_ERROR_IO;
+				break;
+			}
+		case VI_ATTR_ASRL_STOP_BITS:
+			{
+			   	ViUInt16 stopbits = attrState;
+				int ok = device->set_stopbits(stopbits);
+				if(ok < 0)
+        				return VI_ERROR_IO;
+				break;
+			}
+
+		case VI_ATTR_ASRL_DATA_BITS:
+			{
+			   	ViUInt16 databits = attrState;
+				int ok = device->set_databits(databits);
+				if(ok < 0)
+        				return VI_ERROR_IO;
+				break;
+			}
+		case VI_ATTR_ASRL_PARITY:
+			{
+                                std::string paritystr = "none";
+			  	ViUInt16 parity = attrState;
+                                if (parity == VI_ASRL_PAR_NONE) paritystr = "none";
+                                if (parity == VI_ASRL_PAR_ODD) paritystr = "odd";
+                                if (parity == VI_ASRL_PAR_EVEN) paritystr = "even";
+				int ok = device->set_parity(paritystr);
+				if(ok < 0)
+        				return VI_ERROR_IO;
+				break;
+			}
+
                 default:
                         return resource::SetAttribute(attr, attrState);
         }
