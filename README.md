@@ -1,5 +1,12 @@
 LibreVisa
 =========
+
+My Fork of the samangh/librevisa-orig:master librevisa for adding some basic serial support so that "ASRL1::INSTR" etc works
+
+
+samangh/librevisa-orig:master
+-----------------------------
+
 My Fork of LibreVisa, extended for use with PyVisa.
 
 I am trying to control a USBTMC Device using PyVisa and LibreVisa on a Debian Linux System.
