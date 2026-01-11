@@ -1,10 +1,10 @@
 LibreVisa
 =========
 
-My Fork of the samangh/librevisa-orig:master librevisa for adding some basic serial support so that "ASRL1::INSTR" etc works
+My Fork of the [samangh/librevisa-orig:master](https://github.com/samangh/librevisa-orig) librevisa for adding some basic serial support so that "ASRL1::INSTR" etc works
 
 
-samangh/librevisa-orig:master
+samangh/librevisa-orig README
 -----------------------------
 
 My Fork of LibreVisa, extended for use with PyVisa.
@@ -24,6 +24,7 @@ My Python Script:
 ```
 
 Links: 
+* LibreVisa samangh fork: https://github.com/samangh/librevisa-orig
 * LibreVisa: http://www.librevisa.org
 * LibreVISA Original Code: http://www.librevisa.org/git/librevisa.git
 * PyVisa Code: https://github.com/hgrecco/pyvisa
